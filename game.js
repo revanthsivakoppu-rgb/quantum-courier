@@ -106,3 +106,6 @@ function playCustomPuzzle(){const d=sandboxDraft(),customStations=d.ops.flatMap(
 sandbox.addEventListener('change',renderWorkshopBoard);
 document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.workshopSlot!==undefined){const input=$('sandbox-op-'+b.dataset.workshopSlot);input.focus();input.scrollIntoView({block:'nearest',behavior:'smooth'});}if(b.id==='sandbox-play')playCustomPuzzle();if(b.id==='edit-custom-puzzle')openSandbox();if(b.id==='sandbox-reset')renderWorkshopBoard();});
 renderWorkshopBoard();
+
+// Capture button activation so navigation controls share the sound preference.
+document.addEventListener('click',e=>{const button=e.target.closest('button');if(button&&!button.disabled&&button.id!=='sound')tone(560);},true);
