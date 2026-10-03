@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: quantum-courier
+    runtime: static
+    buildCommand: node build.js
+    staticPublishPath: ./dist
