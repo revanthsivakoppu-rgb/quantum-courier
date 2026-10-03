@@ -10,7 +10,7 @@ const tutorials=[
 simplifyTutorial(tutorials);
 tutorials[0].budget=1;tutorials[1].budget=2;tutorials[1].echo=true;
 const rooms=[...tutorials,...Levels.campaign,Levels.finale];
-let current=0,completed=new Set(),stations=[],selected='A',run,history=[],sound=false,audio,relocating=false;
+let current=0,completed=new Set(),stations=[],selected='A',run,history=[],sound=true,audio,relocating=false;
 function freshRun(){const initial=Q.states[rooms[current].start].slice();return {x:1,y:3,hasKey:false,state:initial,branches:[{weight:1,state:initial.slice()}],ops:0,seen:[],scans:[],logs:[`Key prepared: ${Levels.names[rooms[current].start]}. Pick up the diamond on the next tile.`],won:false,message:'Move right onto the green diamond to collect your quantum key.',messageType:''};}
 function start(index,keep=false){relocating=false;current=index;if(!keep)stations=rooms[index].stations.map(s=>({...s,choices:[...s.choices]}));selected=stations[0].id;run=freshRun();history=[];saveProgress();render();}
 function restartRound(){completed.delete(current);start(current);}
@@ -109,3 +109,5 @@ renderWorkshopBoard();
 
 // Capture button activation so navigation controls share the sound preference.
 document.addEventListener('click',e=>{const button=e.target.closest('button');if(button&&!button.disabled&&button.id!=='sound')tone(560);},true);
+
+$('sound').textContent='Sound on';$('sound').setAttribute('aria-pressed','true');
