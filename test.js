@@ -1,0 +1,12 @@
+'use strict';
+const assert=require('node:assert/strict'),Q=require('./quantum.js');let count=0;function test(name,f){f();count++;console.log('PASS '+name);}function near(a,b){assert.ok(Math.abs(a-b)<1e-9,`${a} != ${b}`);}function same(a,b){a.forEach((v,i)=>near(v,b[i]));}
+test('H X Z preserve normalization and each squares to identity',()=>{for(let i=0;i<100;i++){const v=[Math.cos(i),Math.sin(i)];for(const g of ['H','X','Z']){const w=Q.gate(v,g);near(w[0]**2+w[1]**2,1);same(Q.gate(w,g),v);}}});
+test('H Z H equals X, including interference',()=>{for(let i=0;i<30;i++){const v=[Math.cos(i),Math.sin(i)];same(Q.gate(Q.gate(Q.gate(v,'H'),'Z'),'H'),Q.gate(v,'X'));}});
+test('Z and X outcome probabilities sum to one',()=>{for(let i=0;i<100;i++)for(const b of ['X','Z']){const v=[Math.cos(i),Math.sin(i)];near(Q.probability(v,b,0)+Q.probability(v,b,1),1);}});
+test('Incompatible measurement is random and collapses to observed state',()=>{near(Q.probability([1,0],'X'),.5);for(const r of [.1,.9]){const m=Q.measure([1,0],'X',()=>r);near(m.probability,.5);near(Q.probability(m.state,'X',m.outcome),1);}});
+test('An intervening incompatible scan destroys previous certainty',()=>{const first=Q.measure([1,0],'X',()=>.1);const second=Q.measure(first.state,'Z',()=>.1);near(Q.probability(second.state,'X'),.5);});
+test('Branch tracking rejects lucky measurement solutions',()=>{const branches=Q.ensembleMeasure([{weight:1,state:[1,0]}],'X');near(Q.fidelity(branches,Q.states['X+']),.5);assert.equal(Q.certain(branches,'X'),true);assert.equal(Q.certain(branches,'Z'),false);});
+test('Repeated scans keep branch weights normalized without unbounded growth',()=>{let branches=[{weight:1,state:[1,0]}];for(let i=0;i<500;i++){branches=Q.ensembleMeasure(branches,i%2?'Z':'X');near(branches.reduce((s,b)=>s+b.weight,0),1);assert.ok(branches.length<=2);}});
+test('Solutions to all four rooms are physically valid',()=>{let b=[{weight:1,state:[1,0]}];near(Q.fidelity(Q.ensembleMeasure(b,'Z'),Q.states['Z+']),1);assert.ok(Q.certain(Q.ensembleMeasure(b,'X'),'X'));near(Q.fidelity(Q.ensembleGate(b,'H'),Q.states['X+']),1);for(const g of ['H','Z','H'])b=Q.ensembleGate(b,g);near(Q.fidelity(b,Q.states['Z-']),1);});
+test('Z changes phase but not Z-basis probabilities',()=>{const before=Q.states['X+'],after=Q.gate(before,'Z');near(Q.probability(before,'Z'),Q.probability(after,'Z'));near(Q.probability(before,'X'),1);near(Q.probability(after,'X'),0);});
+console.log(`${count} quantum model checks passed.`);

@@ -1,0 +1,24 @@
+'use strict';
+function simplifyTutorial(lessons){
+ const copy=[
+  ['Walk, scan, deliver','Walk right across the green Z scanner, then reach the gold pad. Nothing needs changing in this first lesson.','Your key starts Z-up. A Z scanner reads it as Z-up every time, so this scan leaves it unchanged.'],
+  ['Ask the same question','Click station B, choose X basis, then walk right through both scanners to the gold pad.','The first X scan can give either answer. After that scan, the key has that X state. Asking the same X question again gives the same answer.'],
+  ['Change without looking','Select station A, choose H gate, then walk right to the gold pad. Watch X-plus change from 50% to 100%.','The H gate changes Z-up into X-plus without measuring it. Now an X scan is certain, even though a Z scan would give either answer.'],
+  ['Make the paths add up','Keep A as H. Set B to Z and C to H. Then walk right and watch the visual replay after each gate.','The first H makes two equal amplitudes. Z flips one sign. The last H adds and subtracts them, cancelling Z-up and making Z-down certain. This is quantum interference.']
+ ];
+ lessons.forEach((r,i)=>{r.title=copy[i][0];r.brief=copy[i][1];r.lesson=copy[i][2];});
+}
+function showWelcome(){
+ modal(`<div class="eyebrow">START HERE · NO PHYSICS KNOWLEDGE NEEDED</div><h2>Deliver a tiny quantum key</h2><div class="welcome-key"><span class="key-token" role="img" aria-label="Mint diamond representing your quantum key">◆</span><div><strong>This is your quantum key</strong><span>One qubit · pick it up, then carry it</span></div></div><p>You are the <strong>white courier</strong>. First step onto the green diamond to collect your key. Then carry it to the <strong>gold delivery pad</strong>. Each room tells you what state the key needs to be in.</p><div class="welcome-grid"><section><h3>How to play</h3><ol><li><strong>Move:</strong> press arrow keys or WASD, one step at a time. On a phone, use the direction buttons.</li><li><strong>Set equipment:</strong> click a station, then choose its setting in Room Equipment.</li><li><strong>Use equipment:</strong> walk onto the station. Clicking it only selects it.</li></ol></section><section><h3>How the key works</h3><p><strong>Green scanner:</strong> asks the key a question and may change its state. X and Z are two different questions.</p><p><strong>Purple gate:</strong> changes the key without reading it.</p><p><strong>100%</strong> means certain. <strong>50%</strong> means either answer is equally likely. You will learn the state names by playing.</p></section></div><h3>The rules</h3><ul><li>Use every <strong>lettered station</strong> and stay within the operation limit. Each visit counts once.</li><li>Complete the goal <strong>reliably</strong>. A lucky answer alone is not enough. Red <strong>!</strong> scanners are optional hazards in later levels.</li><li><strong>Undo (U)</strong> reverses a game step. <strong>Restart (R)</strong> resets the whole room, including its equipment. Changing equipment gives you a fresh key.</li></ul><p>Start with <strong>4 guided lessons</strong>, then try the <strong>25 levels</strong>. At the finish, read the explanation and press Continue for the next round.</p>`);
+ $('close-modal').textContent='Let’s play';
+}
+function renderTutorialGuide(){
+ const el=document.getElementById('tutorial-guide');el.hidden=current>=4;if(current>=4)return;
+ let instruction;
+ if(current===0)instruction=run.seen.includes('A')?'Good! The Z scan left the key unchanged. Keep walking right to the gold pad.':'Press → or D to walk right. Cross the green Z tile, then continue to the gold pad.';
+ if(current===1){const b=stations.find(s=>s.id==='B');instruction=b.mode!=='X'?'First, select station B. In Room Equipment, press “X basis”.':run.seen.includes('A')?'Notice the X reading is now certain. Keep walking through B, then finish at the gold pad.':'B is ready! Walk right through A. The first reading can be either X-plus or X-minus.';}
+ if(current===2)instruction=stations[0].mode!=='H'?'Select station A and press “H gate” in Room Equipment.':run.seen.includes('A')?'Look at X-plus: it is now 100%. Continue right to deliver the key.':'Now walk right onto H. A gate changes the key without measuring it.';
+ if(current===3){const b=stations.find(s=>s.id==='B'),c=stations.find(s=>s.id==='C');instruction=b.mode!=='Z'?'Select station B and choose “Z gate”.':c.mode!=='H'?'Now select station C and choose “H gate”.':'The order is H → Z → H. Walk right. Look at the replay after each gate, then reach the gold pad.';}
+ if(!run.hasKey)instruction='First, move one step right onto the green diamond. That picks up your quantum key.';
+ el.innerHTML=`<span class="eyebrow">YOUR NEXT STEP · LESSON ${current+1} OF 4</span><p>${run.won?'Delivery complete! Read the explanation, then press Continue.':instruction}</p><small>X and Z are names for different ways to read the key—not movement directions.</small>`;
+}
