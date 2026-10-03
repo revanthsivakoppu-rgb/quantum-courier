@@ -23,3 +23,31 @@ html[data-theme=dark]{color-scheme:dark;--bg:#10151e;--panel:#1b2533;--line:#354
 .sandbox-panel{max-width:1100px;margin:30px auto;padding:32px;border:1px solid #8699bb66;border-radius:28px;background:var(--panel,transparent)}
 .sandbox-settings,.sandbox-circuit{display:flex;flex-wrap:wrap;gap:18px;margin:24px 0}.sandbox-panel label{display:flex;flex-direction:column;gap:8px;flex:1;min-width:140px}.sandbox-panel select{font:inherit;padding:12px;border:1px solid #8699bb;border-radius:12px;background:#f3f6fc;color:#172941}.sandbox-panel p{line-height:1.7}#sandbox-result{padding:20px;margin-top:24px;border:1px solid #8699bb66;border-radius:18px}.sandbox-panel[hidden]{display:none}
 .workshop-board{display:flex;gap:8px;align-items:center;overflow-x:auto;padding:24px 6px;background:radial-gradient(circle,#86a1c733 1px,transparent 1px);background-size:18px 18px;border-radius:20px;margin:24px 0}.workshop-tile{display:flex;flex:1;min-width:94px;min-height:106px;flex-direction:column;justify-content:center;align-items:center;gap:12px;border:2px solid #91a4c4;border-radius:16px;background:#eef3fb;color:#243858;font-size:25px}.workshop-tile small{font-size:12px}.workshop-gate{background:#eee4ff;border-color:#9867e3;color:#6530ad}.workshop-scan{background:#dcf7e9;border-color:#309871;color:#12634a}.workshop-goal{background:#fff1bd;border-color:#d59b13;color:#805400}.workshop-tile:focus-visible{outline:3px solid #4488ff;outline-offset:3px}
+
+/* Quantum spectrum: violet gates, cyan instruments, gold destinations. */
+html[data-theme=light]{--bg:#f3f2fc;--panel:#eeeffb;--text:#24213e;--muted:#585875;--mint:#087f88;--purple:#7942c7;--line:#d8d4ed}
+html[data-theme=light] body{background:radial-gradient(ellipse at 12% 5%,#e4d7ff,transparent 45%),radial-gradient(ellipse at 90% 35%,#cff5f4,transparent 48%),#f7f6fd}
+html[data-theme=dark]{--bg:#090b1c;--panel:#14152e;--text:#f1efff;--muted:#b4b7d7;--mint:#66e6e8;--purple:#c399ff;--line:#353558}
+html[data-theme=dark] body{background:radial-gradient(ellipse at 12% 0%,#38205b88,transparent 48%),radial-gradient(ellipse at 95% 35%,#07516655,transparent 50%),#090b1c;color:var(--text)}
+html[data-theme] .brand-icon{background:linear-gradient(145deg,#7d43d7,#197b96);color:#eaffff;border-color:#8f86df;box-shadow:0 0 24px #9972ff35}
+html[data-theme] .home-intro h1{background:linear-gradient(110deg,#6943c4,#087e91);background-clip:text;-webkit-background-clip:text;color:transparent}
+html[data-theme=dark] .home-intro h1{background-image:linear-gradient(110deg,#e4cdff,#7de9ed)}
+html[data-theme] button.primary{background:linear-gradient(115deg,#7543ca,#246eae);border-color:#8b70de;color:#fff;box-shadow:0 6px 24px #8050d52b}
+html[data-theme] button.primary:hover{background:linear-gradient(115deg,#8651df,#25839e);box-shadow:0 0 25px #8270df55}
+html[data-theme] .home-state{background:radial-gradient(ellipse at 30% 20%,#dcd0fa,transparent 70%),radial-gradient(ellipse at 90% 90%,#c8eff0,transparent 70%),#f1effc;border-color:#bdb8e8}
+html[data-theme=dark] .home-state{background:radial-gradient(ellipse at 25% 20%,#43296788,transparent 65%),radial-gradient(ellipse at 85% 90%,#14536688,transparent 70%),#14162f;border-color:#585080;box-shadow:0 15px 60px #6e32a51c}
+html[data-theme=dark] .instrument,html[data-theme=dark] .sandbox-panel,html[data-theme=dark] dialog{background:#15162e;border-color:#3e3a64;color:#f1efff}
+html[data-theme=dark] .play-panel{background:#101429;border-color:#393957}
+html[data-theme=dark] #board{background-color:#101429;background-image:radial-gradient(#738cd344 1px,transparent 1px)}
+html[data-theme=dark] .tile:not(.wall):not(.station):not(.exit){background:#242742;border-color:#424968;box-shadow:inset 0 -3px #151a30}
+html[data-theme=dark] .station:not(.scanner),html[data-theme=dark] .workshop-gate{background:#35204e;border-color:#b387f5;color:#dfbeff;box-shadow:0 0 15px #b77af51a}
+html[data-theme=dark] .station.scanner,html[data-theme=dark] .workshop-scan{background:#103e45;border-color:#51cece;color:#9af3ec;box-shadow:0 0 15px #51cece1a}
+html[data-theme=dark] .home-cards button:nth-child(1){background:#15373e;border-color:#315562}
+html[data-theme=dark] .home-cards button:nth-child(2){background:#292342;border-color:#51436f}
+html[data-theme=dark] .home-cards button:nth-child(3){background:#302340;border-color:#594270}
+html[data-theme=dark] .home-intro .eyebrow{background:#29213f;color:#d4b6ff}
+html[data-theme=dark] .home-gates button,html[data-theme=dark] .sandbox-panel select{background:#252440;color:#e4ddff;border-color:#565074}
+html[data-theme=dark] .home-lab-status strong{color:#a6f3ef}
+html[data-theme=dark] .workshop-tile:not(.workshop-gate):not(.workshop-scan):not(.workshop-goal){background:#242742;color:#d2daf4;border-color:#515d80}
+html[data-theme=dark] .workshop-goal{background:#47391c;color:#ffe194;border-color:#d9ae50}
+html[data-theme=light] .home-cards button:nth-child(1){background:#e0f2f1}html[data-theme=light] .home-cards button:nth-child(2){background:#eae2fa}html[data-theme=light] .home-cards button:nth-child(3){background:#f0e4f5}
